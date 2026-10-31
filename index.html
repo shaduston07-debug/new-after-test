@@ -2,26 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Sakugify</title>
-  <meta name="description" content="Turn any video clip into sakuga: frames on 1s/2s/3s, cel shading, smears, impact frames and dramatic framing. Runs entirely in your browser.">
+  <meta name="description" content="An animation gallery with a frame-accurate player: step frame by frame or drawing by drawing and see the timing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="top">
-    <a class="logo" href="#/posts"><span class="kanji">作画</span> sakugify</a>
+    <a class="logo" href="#posts"><span class="kanji">作画</span> sakugify</a>
     <nav>
-      <a href="#/posts" data-nav="posts">Posts</a>
-      <a href="#/upload" data-nav="upload">Upload</a>
-      <a href="#/tags" data-nav="tags">Tags</a>
-      <a href="#/about" data-nav="about">About</a>
+      <a href="#posts" data-nav="posts">Posts</a>
+      <a href="#upload" data-nav="upload">Upload</a>
+      <a href="#tags" data-nav="tags">Tags</a>
+      <a href="#about" data-nav="about">About</a>
     </nav>
     <form id="topSearch" class="search" autocomplete="off">
-      <input name="q" placeholder="Search tags… e.g. smears impact_frames -genga" aria-label="Search tags">
+      <input id="topQ" name="q" placeholder="Search tags… e.g. on_ones fleischer_studios -silent" aria-label="Search tags">
     </form>
   </header>
   <main id="view"></main>
-  <script src="engine.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
