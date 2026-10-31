@@ -204,9 +204,9 @@
   }
 
   // Thumbnail for each drawing, filled in progressively.
-  async function drawingThumbs(src, fps, starts, onThumb, isAlive) {
+  async function drawingThumbs(src, fps, starts, onThumb, isAlive, width) {
     const v = await openScanner(src);
-    const tw = 128, th = Math.round(tw * v.videoHeight / v.videoWidth);
+    const tw = width || 128, th = Math.round(tw * v.videoHeight / v.videoWidth);
     const c = Object.assign(document.createElement('canvas'), { width: tw, height: th });
     const ctx = c.getContext('2d');
     const out = [];
@@ -252,13 +252,14 @@
         add(s.copyright, 'copyright');
         add(s.studio, 'copyright');
         timingTags(timingSummary(s.drawings, s.frames), s.frames).forEach(t => add(t, 'meta'));
-        add('public_domain', 'meta');
-        ['western', 'animated'].concat(String(s.tags || '').split(/\s+/)).forEach(t => add(t, 'general'));
+        add(s.license ? 'creative_commons' : 'public_domain', 'meta');
+        (s.license ? ['animated'] : ['western', 'animated']).concat(String(s.tags || '').split(/\s+/)).forEach(t => add(t, 'general'));
         return {
           id: 's' + (i + 1), seed: true, title: s.title, year: s.year, artist: s.artist, src: 'clips/' + s.key + '.webm',
           thumb: 'clips/' + s.key + '.jpg', fps: s.fps, frames: s.frames, starts: s.drawings, duration: s.duration,
           width: s.w, height: s.h, bytes: s.bytes, source: 'https://archive.org/details/' + s.ia, sourceLabel: 'archive.org/details/' + s.ia,
           start: s.start, tags, tagTypes, created: Date.parse(s.year + '-01-01'),
+          license: s.license || 'Public domain', licenseUrl: s.license_url || '', credit: s.credit || '',
         };
       });
     } catch (e) { seedCache = []; }
@@ -390,12 +391,28 @@
           <span id="rH" class="pill">analyzing…</span>
           <span class="dim">${fmtFps(fps)} fps</span>
         </div>
+        <div class="viewbar">
+          <div class="tabs" id="tabs" role="tablist" aria-label="Frame view">
+            <button role="tab" data-v="drawings" aria-selected="true">Drawings</button>
+            <button role="tab" data-v="frames" aria-selected="false">Every frame</button>
+          </div>
+          <span class="viewhint" id="viewHint"></span>
+          <label class="fpr" id="fprWrap" hidden>Frames per row
+            <select id="fpr"><option value="6">6</option><option value="12">12</option><option value="24">24</option></select></label>
+        </div>
         <div class="film" id="film" aria-label="Drawings"></div>
+        <div class="xsheet" id="xsheet" hidden aria-label="Every frame"></div>
         <p class="keys">Keys: <kbd>,</kbd> <kbd>.</kbd> or <kbd>←</kbd> <kbd>→</kbd> step a frame · <kbd>[</kbd> <kbd>]</kbd> or <kbd>Shift</kbd>+arrows step a drawing · <kbd>Space</kbd> play · <kbd>1</kbd>–<kbd>4</kbd> speed</p>
       </div>`;
     const v = $('#pv', root), sheet = $('#sheet', root), film = $('#film', root), cursor = $('#cursor', root);
     let N = post.frames || 1, starts = post.starts || null, cur = 0, alive = true;
     let segEls = [], filmEls = [], activeD = -1;
+    const xsheet = $('#xsheet', root);
+    let frameEls = [], curEl = null, mode = 'drawings', frameThumbsStarted = false;
+    const pref = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+    const setPref = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } };
+    let perRow = +(pref('fpr') || (root.clientWidth < 600 ? 6 : 12));
+    $('#fpr', root).value = String(perRow);
     onLeave(() => { alive = false; v.pause(); v.removeAttribute('src'); v.load(); });
 
     const holdClass = len => len <= 1 ? 'h1' : len === 2 ? 'h2' : len === 3 ? 'h3' : 'h4';
@@ -432,8 +449,85 @@
       sheet.insertBefore(frag, cursor);
       film.appendChild(ffrag);
       $('#rDN', root).textContent = starts.length;
+      if (mode === 'frames') buildXsheet();
+      setHint();
       update(cur, true);
     }
+
+    function setHint() {
+      const h = $('#viewHint', root);
+      if (!starts) { h.textContent = ''; return; }
+      const D = starts.length;
+      h.innerHTML = mode === 'frames'
+        ? `<b>${D}</b> of ${N} frames are new drawings (highlighted). The other <b>${N - D}</b> repeat the drawing before them.`
+        : `<b>${D}</b> drawings in ${N} frames.`;
+    }
+
+    // Every frame, in rows like a timing sheet. New drawings are highlighted; repeats are dimmed.
+    function buildXsheet() {
+      xsheet.innerHTML = ''; frameEls = []; curEl = null;
+      if (!starts) return;
+      xsheet.style.setProperty('--cols', perRow);
+      const startIdx = new Map(starts.map((st, i) => [st, i]));
+      const frag = document.createDocumentFragment();
+      let row, grid, d = 0;
+      for (let f = 0; f < N; f++) {
+        if (f % perRow === 0) {
+          row = document.createElement('div'); row.className = 'xrow';
+          row.innerHTML = `<span class="xlabel">${f}<small>${(f / fps).toFixed(2)}s</small></span>`;
+          grid = document.createElement('div'); grid.className = 'xgrid';
+          row.appendChild(grid); frag.appendChild(row);
+        }
+        const isNew = startIdx.has(f);
+        if (isNew) d = startIdx.get(f);
+        const len = lenOf(d);
+        const b = document.createElement('button');
+        b.className = 'fr ' + (isNew ? 'key ' + holdClass(len) : 'rep');
+        b.innerHTML = `<span class="img"></span><span class="n">${f}</span>${isNew ? `<span class="tag">#${d + 1}</span>` : '<span class="tag">=</span>'}`;
+        b.title = isNew ? `Frame ${f} · new drawing #${d + 1} · ${holdLabel(len)}` : `Frame ${f} · repeats drawing #${d + 1}`;
+        b.onclick = () => seekFrame(f);
+        grid.appendChild(b); frameEls.push(b);
+      }
+      xsheet.appendChild(frag);
+      if (frameCache) frameCache.forEach((t, i) => setFrameThumb(i, t));
+      markCurrent(cur);
+    }
+    let frameCache = null;
+    function setFrameThumb(i, src) { const el = frameEls[i] && frameEls[i].querySelector('.img'); if (el) el.style.backgroundImage = `url("${src}")`; }
+    function markCurrent(f) {
+      if (curEl) curEl.classList.remove('cur');
+      curEl = frameEls[f] || null;
+      if (curEl) {
+        curEl.classList.add('cur');
+        if (v.paused && mode === 'frames') {
+          const r = curEl.getBoundingClientRect();
+          if (r.top < 0 || r.bottom > window.innerHeight) curEl.scrollIntoView({ block: 'nearest' });
+        }
+      }
+    }
+    async function loadFrameThumbs() {
+      if (frameThumbsStarted) return;
+      frameThumbsStarted = true;
+      const key = 'frames:' + post.id + ':' + N;
+      const cached = await Store.get('cache', key).catch(() => null);
+      if (cached) { frameCache = cached.thumbs; frameCache.forEach((t, i) => setFrameThumb(i, t)); return; }
+      frameCache = [];
+      const all = Array.from({ length: N }, (_, i) => i);
+      drawingThumbs(url, fps, all, (i, t) => { frameCache[i] = t; setFrameThumb(i, t); }, () => alive, 96)
+        .then(th => th && Store.put('cache', { key, thumbs: th }).catch(() => {}))
+        .catch(() => {});
+    }
+    function setMode(m) {
+      mode = m; setPref('frameView', m);
+      $('#tabs', root).querySelectorAll('button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.v === m)));
+      film.hidden = m !== 'drawings';
+      xsheet.hidden = m !== 'frames';
+      $('#fprWrap', root).hidden = m !== 'frames';
+      if (m === 'frames') { if (!frameEls.length) buildXsheet(); loadFrameThumbs(); }
+      setHint();
+    }
+    $('#tabs', root).addEventListener('click', e => { const b = e.target.closest('button'); if (b) setMode(b.dataset.v); });
+    $('#fpr', root).addEventListener('change', e => { perRow = +e.target.value; setPref('fpr', perRow); buildXsheet(); });
 
     function update(f, force) {
       cur = f;
@@ -441,6 +535,7 @@
       $('#rT', root).textContent = fmtPrecise(f / fps);
       $('#osdF', root).textContent = 'F ' + f;
       cursor.style.left = ((f + 0.5) / N * 100) + '%';
+      if (frameEls.length) markCurrent(f);
       const d = drawingAt(f);
       if (d >= 0 && (d !== activeD || force)) {
         if (segEls[activeD]) { segEls[activeD].classList.remove('on'); filmEls[activeD].classList.remove('on'); }
@@ -525,6 +620,7 @@
     document.addEventListener('keydown', onKey);
     onLeave(() => document.removeEventListener('keydown', onKey));
 
+    if (pref('frameView') === 'frames') setMode('frames');
     return {
       setStarts(s, n) { starts = s; if (n) N = n; if (v.readyState >= 1) buildSheet(); },
       setThumb(i, src) { const el = filmEls[i] && filmEls[i].querySelector('.img'); if (el) el.style.backgroundImage = `url("${src}")`; },
@@ -566,7 +662,7 @@
           <dt>${p.seed ? 'Released' : 'Posted'}</dt><dd>${p.seed ? p.year : new Date(p.created).toLocaleDateString()}</dd>
           <dt>Size</dt><dd>${p.width}×${p.height}${p.bytes || p.blob ? ' · ' + fmtSize(p.bytes || p.blob.size) : ''}</dd>
           <dt>Frames</dt><dd>${p.frames || '–'} @ ${fmtFps(p.fps)} fps</dd>
-          ${p.seed ? `<dt>Source</dt><dd><a href="${esc(p.source)}" target="_blank" rel="noopener">Internet Archive</a>, from ${fmtTime(p.start)}</dd><dt>License</dt><dd>Public domain</dd>`
+          ${p.seed ? `<dt>Source</dt><dd><a href="${esc(p.source)}" target="_blank" rel="noopener">Internet Archive</a>, from ${fmtTime(p.start)}</dd><dt>License</dt><dd>${p.licenseUrl ? `<a href="${esc(p.licenseUrl)}" target="_blank" rel="noopener">${esc(p.license)}</a>` : esc(p.license)}</dd>${p.credit ? `<dt>Credit</dt><dd>${esc(p.credit)}</dd>` : ''}`
                    : `<dt>File</dt><dd>${esc(p.sourceName || '—')}</dd>`}
           <dt>Score</dt><dd><span id="score">${score}</span> <button class="vote" id="up" aria-label="Vote up">▲</button></dd>
         </dl></section>
@@ -639,14 +735,19 @@
           The colored sheet under the video shows every drawing at its real length.</dd>
         <dt>Keys</dt><dd><kbd>,</kbd> <kbd>.</kbd> or the arrow keys step a frame. <kbd>[</kbd> <kbd>]</kbd> or Shift + arrows step a drawing.
           <kbd>Space</kbd> plays and pauses, <kbd>1</kbd>–<kbd>4</kbd> set the speed. Drag across the timing sheet to scrub.</dd>
+        <dt>Every frame</dt><dd>Switch the strip under the video to <b>Every frame</b> to lay the whole clip out in rows like a timing sheet.
+          Frames that start a new drawing are highlighted and numbered; frames that only repeat the drawing before them are dimmed with
+          an <b>=</b>. The highlighted frames are the ones the motion depends on: drop the repeats and it plays the same.</dd>
         <dt>Camera moves</dt><dd>A pan over a held drawing changes every frame, so it reads as animation on 1s. Step through it to see what's really drawn.</dd>
         <dt>Your uploads</dt><dd>Clips you post stay in this browser only (IndexedDB). They are never uploaded anywhere.</dd>
       </dl>
       <h2>The starter collection</h2>
-      <p>The gallery comes with short excerpts from public-domain animation, pulled from the Internet Archive. Telecined TV transfers were
-      converted back to their original 24 film frames so stepping lands on real drawings.</p>
-      <div class="tablewrap"><table class="tagtable"><thead><tr><th>Film</th><th>Year</th><th>Excerpt</th></tr></thead><tbody>
-        ${s.map(p => `<tr><td><a href="#post-${p.id}">${esc(p.title)}</a></td><td>${p.year}</td><td><a href="${esc(p.source)}" target="_blank" rel="noopener">${fmtTime(p.start)}–${fmtTime(p.start + p.duration)}</a></td></tr>`).join('')}
+      <p>The gallery comes with short excerpts from openly licensed animation on the Internet Archive: anime-style action from the
+      <b>Morevna Project</b> (an open-source anime series and its <i>Pepper &amp; Carrot</i> adaptation, based on David Revoy's webcomic,
+      both Creative Commons BY-SA), and classic public-domain cartoons. Telecined TV transfers were converted back to their original
+      24 film frames so stepping lands on real drawings. The excerpts are shared under the same license as their source.</p>
+      <div class="tablewrap"><table class="tagtable"><thead><tr><th>Film</th><th>Year</th><th>Excerpt</th><th>License</th></tr></thead><tbody>
+        ${s.map(p => `<tr><td><a href="#post-${p.id}">${esc(p.title)}</a></td><td>${p.year}</td><td><a href="${esc(p.source)}" target="_blank" rel="noopener">${fmtTime(p.start)}–${fmtTime(p.start + p.duration)}</a></td><td>${p.licenseUrl ? `<a href="${esc(p.licenseUrl)}" target="_blank" rel="noopener">${esc(p.license)}</a>` : esc(p.license)}</td></tr>`).join('')}
       </tbody></table></div>
     </div>`;
   }
