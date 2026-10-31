@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sakugify</title>
+  <meta name="description" content="Turn any video clip into sakuga: frames on 1s/2s/3s, cel shading, smears, impact frames and dramatic framing. Runs entirely in your browser.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="#/posts"><span class="kanji">作画</span> sakugify</a>
+    <nav>
+      <a href="#/posts" data-nav="posts">Posts</a>
+      <a href="#/upload" data-nav="upload">Upload</a>
+      <a href="#/tags" data-nav="tags">Tags</a>
+      <a href="#/about" data-nav="about">About</a>
+    </nav>
+    <form id="topSearch" class="search" autocomplete="off">
+      <input name="q" placeholder="Search tags… e.g. smears impact_frames -genga" aria-label="Search tags">
+    </form>
+  </header>
+  <main id="view"></main>
+  <script src="engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
