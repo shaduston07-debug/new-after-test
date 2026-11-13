@@ -12,14 +12,16 @@
       "bundleIdentifier": "com.inkwell.studio",
       "developerName": "shaduston07",
       "subtitle": "Paint, animate and make webtoons",
+      "localizedDescription": "A painting, animation and webtoon app for iPad and Apple Pencil, with Illustrate, Animate and Webtoon modes and Inkwell Learning courses.",
+      "iconURL": "https://shaduston07-debug.github.io/test-01/icons/icon-512.png",
+      "tintColor": "#7b5cff",
+      "category": "utilities",
+      "screenshotURLs": [],
       "version": "1.0.93",
       "versionDate": "2026-11-13",
       "downloadURL": "https://github.com/shaduston07-debug/test-01/releases/download/latest/InkwellStudio.ipa",
       "size": 40646979,
       "minOSVersion": "15.0",
-      "localizedDescription": "A painting, animation and webtoon app for iPad and Apple Pencil, with Illustrate, Animate and Webtoon modes and Inkwell Learning courses.",
-      "tintColor": "#7b5cff",
-      "iconURL": "https://shaduston07-debug.github.io/test-01/icons/icon-512.png",
       "versions": [
         {
           "version": "1.0.93",
@@ -31,116 +33,118 @@
           "localizedDescription": "Build 93 from c067c8b."
         }
       ],
-      "category": "utilities",
-      "screenshotURLs": [],
       "appPermissions": {}
     },
     {
       "name": "Inkwell Notes",
       "bundleIdentifier": "app.inkwell.notes",
       "developerName": "shaduston07",
-      "version": "1.0",
+      "subtitle": "Notes with definitions and translations",
+      "localizedDescription": "A notes app in the style of Apple Notes, with spell check, dictionary definitions, translations (Old Norse, Latin, Greek, argot, Lingala, Tshiluba), Pencil sketches, recordings and pictures.",
+      "iconURL": "https://raw.githubusercontent.com/shaduston07-debug/test-01/claude/notes-spell-check-definitions-q0ppqf/ios/Inkwell/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png",
+      "tintColor": "#C8102E",
+      "category": "utilities",
+      "screenshotURLs": [],
+      "version": "1.0.202611082308",
       "versionDate": "2026-11-08",
       "downloadURL": "https://github.com/shaduston07-debug/test-01/releases/download/ipa-latest/Inkwell.ipa",
       "size": 613815,
       "minOSVersion": "15.0",
-      "localizedDescription": "A notes app in the style of Apple Notes, with spell check, dictionary definitions, translations (Old Norse, Latin, Greek, argot, Lingala, Tshiluba), Pencil sketches, recordings and pictures.",
-      "subtitle": "Notes with definitions and translations",
-      "tintColor": "#C8102E",
-      "iconURL": "https://raw.githubusercontent.com/shaduston07-debug/test-01/claude/notes-spell-check-definitions-q0ppqf/ios/Inkwell/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png",
       "versions": [
         {
-          "version": "1.0",
+          "version": "1.0.202611082308",
+          "buildVersion": "202611082308",
           "date": "2026-11-08",
           "downloadURL": "https://github.com/shaduston07-debug/test-01/releases/download/ipa-latest/Inkwell.ipa",
           "size": 613815,
           "minOSVersion": "15.0",
-          "localizedDescription": "Latest build from GitHub Actions."
+          "localizedDescription": "Build 202611082308 from ba1a84e."
         }
       ],
-      "category": "utilities",
-      "screenshotURLs": [],
       "appPermissions": {}
     },
     {
       "name": "Inkwell Browser",
       "bundleIdentifier": "com.mangashaduston.inkwellbrowser",
       "developerName": "shaduston07",
-      "version": "1.0",
+      "subtitle": "Desktop browser with extensions",
+      "localizedDescription": "A desktop-class browser for iPad: real Chrome and Firefox extensions, desktop websites, a Mac-style tab strip and keyboard shortcuts. Requires iPadOS 18.4 or later.",
+      "iconURL": "https://raw.githubusercontent.com/shaduston07-debug/browser/main/ci/Assets.xcassets/AppIcon.appiconset/icon-1024.png",
+      "tintColor": "#2F6FEB",
+      "category": "utilities",
+      "screenshotURLs": [],
+      "version": "1.0.22",
       "versionDate": "2026-11-13",
       "downloadURL": "https://github.com/shaduston07-debug/browser/releases/download/latest/InkwellBrowser.ipa",
       "size": 513987,
       "minOSVersion": "18.4",
-      "localizedDescription": "A desktop-class browser for iPad: real Chrome and Firefox extensions, desktop websites, a Mac-style tab strip and keyboard shortcuts. Requires iPadOS 18.4 or later.",
-      "subtitle": "Desktop browser with extensions",
-      "tintColor": "#2F6FEB",
-      "iconURL": "https://raw.githubusercontent.com/shaduston07-debug/browser/main/ci/Assets.xcassets/AppIcon.appiconset/icon-1024.png",
       "versions": [
         {
-          "version": "1.0",
+          "version": "1.0.22",
+          "buildVersion": "22",
           "date": "2026-11-13",
           "downloadURL": "https://github.com/shaduston07-debug/browser/releases/download/latest/InkwellBrowser.ipa",
           "size": 513987,
           "minOSVersion": "18.4",
-          "localizedDescription": "Latest build from GitHub Actions."
+          "localizedDescription": "Build 22."
         }
       ],
-      "category": "utilities",
-      "screenshotURLs": [],
       "appPermissions": {}
     },
     {
       "name": "Inkwell Drop",
       "bundleIdentifier": "com.mangashaduston.inkwelldrop",
       "developerName": "shaduston07",
-      "version": "1.0",
+      "subtitle": "Share files with Android and iOS",
+      "localizedDescription": "AirDrop-style sharing between iPhone, iPad and Android over Bluetooth, with automatic hand-off to Wi-Fi. No account, no internet, no pairing.",
+      "iconURL": "https://raw.githubusercontent.com/shaduston07-debug/connectivity/claude/funny-bell-yi3gy2/ios/Assets.xcassets/AppIcon.appiconset/icon-1024.png",
+      "tintColor": "#14A37F",
+      "category": "utilities",
+      "screenshotURLs": [],
+      "version": "1.0.12",
       "versionDate": "2026-11-11",
       "downloadURL": "https://github.com/shaduston07-debug/connectivity/releases/download/latest/InkwellDrop.ipa",
       "size": 803167,
       "minOSVersion": "16.0",
-      "localizedDescription": "AirDrop-style sharing between iPhone, iPad and Android over Bluetooth, with automatic hand-off to Wi-Fi. No account, no internet, no pairing.",
-      "subtitle": "Share files with Android and iOS",
-      "tintColor": "#14A37F",
-      "iconURL": "https://raw.githubusercontent.com/shaduston07-debug/connectivity/claude/funny-bell-yi3gy2/ios/Assets.xcassets/AppIcon.appiconset/icon-1024.png",
       "versions": [
         {
-          "version": "1.0",
+          "version": "1.0.12",
+          "buildVersion": "12",
           "date": "2026-11-11",
           "downloadURL": "https://github.com/shaduston07-debug/connectivity/releases/download/latest/InkwellDrop.ipa",
           "size": 803167,
           "minOSVersion": "16.0",
-          "localizedDescription": "Latest build from GitHub Actions."
+          "localizedDescription": "Build 12 from 5691e88."
         }
       ],
-      "category": "utilities",
-      "screenshotURLs": [],
       "appPermissions": {}
     },
     {
       "name": "Inkfinity",
       "bundleIdentifier": "app.draftwell.sketch",
       "developerName": "shaduston07",
-      "version": "1.0",
+      "subtitle": "Infinite-canvas vector sketching",
+      "localizedDescription": "An infinite-canvas vector sketching app for iPad and Apple Pencil: pressure-aware brushes, live shapes, perspective guides, layers, and PNG/SVG/PDF/PSD export.",
+      "iconURL": "https://raw.githubusercontent.com/shaduston07-debug/conceptlike-app/claude/draftwell-ipad-app/ios/Inkfinity/Assets.xcassets/AppIcon.appiconset/icon-1024.png",
+      "tintColor": "#7A4CE0",
+      "category": "utilities",
+      "screenshotURLs": [],
+      "version": "1.0.5",
       "versionDate": "2026-11-03",
       "downloadURL": "https://github.com/shaduston07-debug/conceptlike-app/releases/download/build-5/Inkfinity.ipa",
       "size": 1199662,
       "minOSVersion": "15.0",
-      "localizedDescription": "An infinite-canvas vector sketching app for iPad and Apple Pencil: pressure-aware brushes, live shapes, perspective guides, layers, and PNG/SVG/PDF/PSD export.",
-      "subtitle": "Infinite-canvas vector sketching",
-      "tintColor": "#7A4CE0",
-      "iconURL": "https://raw.githubusercontent.com/shaduston07-debug/conceptlike-app/claude/draftwell-ipad-app/ios/Inkfinity/Assets.xcassets/AppIcon.appiconset/icon-1024.png",
       "versions": [
         {
-          "version": "1.0",
+          "version": "1.0.5",
+          "buildVersion": "5",
           "date": "2026-11-03",
           "downloadURL": "https://github.com/shaduston07-debug/conceptlike-app/releases/download/build-5/Inkfinity.ipa",
           "size": 1199662,
           "minOSVersion": "15.0",
-          "localizedDescription": "Latest build from GitHub Actions."
+          "localizedDescription": "Build 5 from b6706ae."
         }
       ],
-      "category": "utilities",
-      "screenshotURLs": [],
       "appPermissions": {}
     }
   ],

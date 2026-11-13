@@ -1,0 +1,46 @@
+# Keeps flekstore.json pointing at each app's newest build, with a version
+# number that goes up, so Flekstore offers the update.
+name: Update Flekstore source
+
+on:
+  schedule:
+    - cron: '17 * * * *'   # every hour
+  workflow_dispatch:
+  push:
+    paths: ['scripts/update_source.py', '.github/workflows/update-source.yml']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-source
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild flekstore.json
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/update_source.py
+      - name: Commit if anything changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp flekstore.json "$RUNNER_TEMP/flekstore.json"
+          # The source is served from main and from the branch Flekstore was first given.
+          for branch in main claude/kind-bell-p6w5lt; do
+            git fetch -q origin "$branch" || continue
+            git checkout -q -B "$branch" "origin/$branch"
+            cp "$RUNNER_TEMP/flekstore.json" flekstore.json
+            if git diff --quiet -- flekstore.json; then
+              echo "$branch: no change"
+            else
+              git add flekstore.json
+              git commit -q -m "Update Flekstore source"
+              git push -q origin "$branch"
+              echo "$branch: updated"
+            fi
+          done
