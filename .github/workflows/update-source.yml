@@ -33,12 +33,12 @@ jobs:
           # The source is served from main and from the branch Flekstore was first given.
           for branch in main claude/kind-bell-p6w5lt; do
             git fetch -q origin "$branch" || continue
-            git checkout -q -B "$branch" "origin/$branch"
+            git checkout -q -f -B "$branch" "origin/$branch"
             cp "$RUNNER_TEMP/flekstore.json" flekstore.json
-            if git diff --quiet -- flekstore.json; then
+            git add flekstore.json
+            if git diff --cached --quiet; then
               echo "$branch: no change"
             else
-              git add flekstore.json
               git commit -q -m "Update Flekstore source"
               git push -q origin "$branch"
               echo "$branch: updated"
