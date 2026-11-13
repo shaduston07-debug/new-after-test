@@ -2,11 +2,39 @@
   "name": "Inkwell Apps",
   "identifier": "io.github.shaduston07-debug.inkwell",
   "subtitle": "Apps by shaduston07",
-  "description": "Unsigned builds of Inkwell Notes, Inkwell Browser, Inkwell Drop and Inkfinity.",
+  "description": "Unsigned builds of Inkwell Studio, Inkwell Notes, Inkwell Browser, Inkwell Drop and Inkfinity.",
   "iconURL": "https://raw.githubusercontent.com/shaduston07-debug/test-01/claude/notes-spell-check-definitions-q0ppqf/ios/Inkwell/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png",
   "website": "https://github.com/shaduston07-debug",
   "tintColor": "#C8102E",
   "apps": [
+    {
+      "name": "Inkwell Studio",
+      "bundleIdentifier": "com.inkwell.studio",
+      "developerName": "shaduston07",
+      "subtitle": "Paint, animate and make webtoons",
+      "version": "1.0.93",
+      "versionDate": "2026-11-13",
+      "downloadURL": "https://github.com/shaduston07-debug/test-01/releases/download/latest/InkwellStudio.ipa",
+      "size": 40646979,
+      "minOSVersion": "15.0",
+      "localizedDescription": "A painting, animation and webtoon app for iPad and Apple Pencil, with Illustrate, Animate and Webtoon modes and Inkwell Learning courses.",
+      "tintColor": "#7b5cff",
+      "iconURL": "https://shaduston07-debug.github.io/test-01/icons/icon-512.png",
+      "versions": [
+        {
+          "version": "1.0.93",
+          "buildVersion": "93",
+          "date": "2026-11-13",
+          "downloadURL": "https://github.com/shaduston07-debug/test-01/releases/download/latest/InkwellStudio.ipa",
+          "size": 40646979,
+          "minOSVersion": "15.0",
+          "localizedDescription": "Build 93 from c067c8b."
+        }
+      ],
+      "category": "utilities",
+      "screenshotURLs": [],
+      "appPermissions": {}
+    },
     {
       "name": "Inkwell Notes",
       "bundleIdentifier": "app.inkwell.notes",
