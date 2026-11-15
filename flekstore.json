@@ -17,20 +17,20 @@
       "tintColor": "#7b5cff",
       "category": "utilities",
       "screenshotURLs": [],
-      "version": "1.0.101",
+      "version": "1.0.103",
       "versionDate": "2026-11-15",
       "downloadURL": "https://github.com/shaduston07-debug/test-01/releases/download/latest/InkwellStudio.ipa",
-      "size": 40683768,
+      "size": 40698375,
       "minOSVersion": "15.0",
       "versions": [
         {
-          "version": "1.0.101",
-          "buildVersion": "101",
+          "version": "1.0.103",
+          "buildVersion": "103",
           "date": "2026-11-15",
           "downloadURL": "https://github.com/shaduston07-debug/test-01/releases/download/latest/InkwellStudio.ipa",
-          "size": 40683768,
+          "size": 40698375,
           "minOSVersion": "15.0",
-          "localizedDescription": "Build 101 from a63abc4."
+          "localizedDescription": "Build 103 from d1a60a0."
         }
       ],
       "appPermissions": {}
@@ -45,20 +45,20 @@
       "tintColor": "#C8102E",
       "category": "utilities",
       "screenshotURLs": [],
-      "version": "1.0.202611082308",
-      "versionDate": "2026-11-08",
+      "version": "1.0.202611151431",
+      "versionDate": "2026-11-15",
       "downloadURL": "https://github.com/shaduston07-debug/test-01/releases/download/ipa-latest/Inkwell.ipa",
-      "size": 613815,
+      "size": 615479,
       "minOSVersion": "15.0",
       "versions": [
         {
-          "version": "1.0.202611082308",
-          "buildVersion": "202611082308",
-          "date": "2026-11-08",
+          "version": "1.0.202611151431",
+          "buildVersion": "202611151431",
+          "date": "2026-11-15",
           "downloadURL": "https://github.com/shaduston07-debug/test-01/releases/download/ipa-latest/Inkwell.ipa",
-          "size": 613815,
+          "size": 615479,
           "minOSVersion": "15.0",
-          "localizedDescription": "Build 202611082308 from ba1a84e."
+          "localizedDescription": "Build 202611151431 from f3d5681."
         }
       ],
       "appPermissions": {}
