@@ -17,20 +17,20 @@
       "tintColor": "#7b5cff",
       "category": "utilities",
       "screenshotURLs": [],
-      "version": "1.0.119",
+      "version": "1.0.126",
       "versionDate": "2026-11-16",
       "downloadURL": "https://github.com/shaduston07-debug/test-01/releases/download/latest/InkwellStudio.ipa",
-      "size": 116510049,
+      "size": 116812218,
       "minOSVersion": "15.0",
       "versions": [
         {
-          "version": "1.0.119",
-          "buildVersion": "119",
+          "version": "1.0.126",
+          "buildVersion": "126",
           "date": "2026-11-16",
           "downloadURL": "https://github.com/shaduston07-debug/test-01/releases/download/latest/InkwellStudio.ipa",
-          "size": 116510049,
+          "size": 116812218,
           "minOSVersion": "15.0",
-          "localizedDescription": "Build 119 from f05a7d2."
+          "localizedDescription": "Build 126 from b5a48e8."
         }
       ],
       "appPermissions": {}
